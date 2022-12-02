@@ -1,0 +1,38 @@
+syntax = "proto3";
+option go_package = "/.";
+import "google/protobuf/timestamp.proto";
+enum TCPstateType {
+	CLOSED = 0;
+	LISTEN = 1;
+	SYN_SENT = 2;
+  SYN_RECEIVED = 3;
+  ESTABLISHED = 4;
+  FIN_WAIT_1 = 5;
+  CLOSE_WAIT = 6;
+  FIN_WAIT_2 = 7;
+  LAST_ACK = 8;
+  TIME_WAIT = 9;
+  CLOSING = 10;
+}
+
+message MapTCPstate {
+  TCPstateType type = 1;
+  uint32 count = 2;
+}
+
+message HistogramFamily {
+  uint32 mashine_id = 1;
+  repeated uint32 pck_len = 2;
+  repeated uint32 L3_DST = 3;
+  repeated uint32 L4_DST = 4;
+  repeated uint32 L3_SRC = 5;
+  repeated uint32 L4_SRC = 6;
+  repeated uint32 L3_PROTOCOLS = 7;
+  repeated MapTCPstate TCP_STATES = 9;
+  google.protobuf.Timestamp  probe_time = 10;
+  oneof dst_ip_addr {
+    fixed32 v4 = 11;
+    bytes v6 = 12;
+  }
+  
+}

@@ -1,0 +1,13 @@
+[Unit]
+Description=Hadoop histogramm collector
+After=network.target
+
+[Service]
+User=vacilio
+Type=simple
+ExecStart=/usr/local/sbin/hhc/hhc.py
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
